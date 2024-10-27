@@ -30,7 +30,7 @@ function Header() {
   return (
     <header className="select-none p-4 text-white flex justify-between items-center bg-gradient-to-r from-purple-500 to-blue-500">
       <h2 className="text-xl font-semibold">{period}</h2>
-      <span className="inline">null</span>
+      <span className="inline">Samuel Tuoyo</span>
       <div>
         <img
           src="/user.png"

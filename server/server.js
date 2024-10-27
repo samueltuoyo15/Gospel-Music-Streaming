@@ -13,39 +13,40 @@ const __dirname = dirname(__filename)
 
 const client_id = process.env.CLIENT_ID
 const client_secret = process.env.CLIENT_SECRET
-  
 app.use(express.static(path.join(__dirname, '..', 'client', 'dist')))
 
-app.get('/api', (req, res) => {
-  const getAccessToken = async () => {
-    const response = await axios.post('https://accounts.spotify.com/api/token', {
+const getAccessToken = async () => {
+  const response = await axios.post(
+    'https://accounts.spotify.com/api/token',
+    'grant_type=client_credentials',
+    {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Basic ' + btoa(`${client_id}:${client_secret}`)
-      },
-      body: 'grant_type=client_credentials'
-    })
-    const data = await response.json()
-    return data.access_token
-  }
+        Authorization: 'Basic ' + Buffer.from(`${client_id}:${client_secret}`).toString('base64')
+      }
+    }
+  )
+  return response.data.access_token
+}
 
-  const fetchGospelTracks = async () => {
+app.get('/api', async (req, res) => {
+  try {
     const token = await getAccessToken()
-    const response = await fetch(
+    const response = await axios.get(
       'https://api.spotify.com/v1/search?q=genre:gospel&type=track&limit=30',
       {
         headers: {
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`
         }
       }
     )
-    const data = await response.json()
-    console.log(data.tracks.items)
-    setSongs(data.tracks.items)
+    const songs = response.data.tracks.items
+    res.json(songs)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Failed to fetch songs' })
   }
-  res.send(data.tracks.items)
 })
-
 app.listen(process.env.PORT, () => {
   console.log('Server is running on http://localhost:' + process.env.PORT)
 })

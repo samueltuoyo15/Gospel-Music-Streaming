@@ -8,8 +8,8 @@ function Home() {
   const fetchGospelTracks = async () => {
     const response = await fetch('/api')
     const data = await response.json()
-    console.log(data.tracks.items)
-    setSongs(data.tracks.items)
+    console.log(data)
+    setSongs(data)
   }
 
   useEffect(() => {
