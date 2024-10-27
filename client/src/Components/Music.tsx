@@ -11,22 +11,44 @@ function Music({ songs }: MusicProps) {
   const [isSongPlaying, setIsSongPlaying] = useState<boolean>(false)
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
   const [expanded, setExpanded] = useState<boolean>(false)
+  const [playback, setPlayback] = useState<HTMLAudioElement | null>(null)
 
   useEffect(() => {
     const timeout = setTimeout(() => setLoading(false), 2000)
     return () => clearTimeout(timeout)
   }, [])
 
-  const playback = new Audio(selectedIndex ? songs[selectedIndex].preview_url : '')
+  useEffect(() => {
+    if (selectedIndex !== null) {
+      const audio = new Audio(songs[selectedIndex].preview_url)
+      setPlayback(audio)
+      audio.play()
+      setIsSongPlaying(true)
 
-  const togglePlayBack = () => {
-    isSongPlaying ? playback.pause() : playback.play()
-    setIsSongPlaying(!isSongPlaying)
-  }
+      audio.onended = () => {
+        setIsSongPlaying(false)
+        setSelectedIndex(null)
+      }
+
+      return () => {
+        audio.pause()
+        audio.currentTime = 0
+      }
+    }
+  }, [selectedIndex, songs])
 
   const selectSong = (index: number) => {
-    setSelectedIndex(index)
-    setExpanded(true)
+    if (selectedIndex === index) {
+      setIsSongPlaying(!isSongPlaying)
+      if (isSongPlaying) {
+        playback?.pause()
+      } else {
+        playback?.play()
+      }
+    } else {
+      setSelectedIndex(index)
+      setExpanded(true)
+    }
   }
 
   const toggleExpand = () => setExpanded(!expanded)
@@ -65,7 +87,7 @@ function Music({ songs }: MusicProps) {
       {selectedIndex !== null && (
         <div
           className={`fixed bottom-14 left-0 w-full bg-gray-900 text-white p-4 transition-height duration-300 ${
-            expanded ? 'h-40' : 'h-16'
+            expanded ? 'h-40' : 'h-full'
           }`}
         >
           <div className="flex items-center justify-between">
@@ -79,7 +101,7 @@ function Music({ songs }: MusicProps) {
           </div>
           {expanded && (
             <div className="mt-4">
-              <button className="bg-blue-500 p-2 rounded">Play</button>
+              <button className="bg-blue-500 p-2 rounded" onClick={toggleExpand}>Play</button>
               <button
                 className="ml-2 bg-blue-500 p-2 rounded"
                 onClick={showPrevious}
@@ -89,7 +111,12 @@ function Music({ songs }: MusicProps) {
               </button>
               <button
                 className="bg-blue-500 p-2 rounded"
-                onClick={togglePlayBack}
+                onClick={() => {
+                  if (playback) {
+                    isSongPlaying ? playback.pause() : playback.play()
+                    setIsSongPlaying(!isSongPlaying)
+                  }
+                }}
               >
                 {isSongPlaying ? 'pause' : 'play'}
               </button>
