@@ -95,7 +95,7 @@ function Music({ songs }: MusicProps) {
       <p className="text-gray-400">{songs[selectedIndex].artists[0].name}</p>
     </div>
    </div>
-   <button onClick={toggleExpand} className={`${!expanded ? 'fixed top-5 left-0 text-2xl' : 'text-white text-xl mr-0'}`}>
+   <button onClick={toggleExpand} className={`${!expanded ? 'fixed top-4 left-4 text-2xl' : 'text-white text-xl mr-0'}`}>
     {expanded ? '▲' : '▼'}
     </button>
     </div>
