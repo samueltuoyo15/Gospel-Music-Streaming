@@ -90,30 +90,29 @@ function Music({ songs }: MusicProps) {
             expanded ? 'h-40' : 'h-full bottom-0 overflow-hidden flex justify-center flex-cols items-center'
           }`}
         >
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <img src={songs[selectedIndex].album.images[0]?.url} className="float-left w-10 h-10 mr-3 rounded" />
-              <div>
-              <p className="font-bold">{songs[selectedIndex].name}</p>
-              <p className="text-gray-400">{songs[selectedIndex].artists[0].name}</p>
-             </div>
-            <button onClick={toggleExpand} className="text-white text-xl">
-              {expanded ? '▲' : '▼' }
-            </button>
-            </div>
-          </div> 
-          {expanded && (
-            <div className="mt-4">
-              <button className="bg-blue-500 p-2 rounded" onClick={toggleExpand}>Play</button>
-              <button
-                className="ml-2 bg-blue-500 p-2 rounded"
+  <div className="flex items-center justify-between">
+  <div className="flex items-center flex-1">
+    <img src={songs[selectedIndex].album.images[0]?.url} className="w-10 h-10 mr-3 rounded" />
+    <div>
+      <p className="font-bold">{songs[selectedIndex].name}</p>
+      <p className="text-gray-400">{songs[selectedIndex].artists[0].name}</p>
+    </div>
+   </div>
+   <button onClick={toggleExpand} className="text-white text-xl mr-0">
+    {expanded ? '▲' : '▼'}
+    </button>
+   </div>
+     {expanded && (
+           <div className="mt-4">
+             <button
+                className="ml-2 bg-blue-500 p-2 mr-5 rounded"
                 onClick={showPrevious}
                 disabled={selectedIndex === 0}
               >
                 Previous
               </button>
               <button
-                className="bg-blue-500 p-2 rounded"
+                className="bg-blue-500 p-2 mr-5 rounded"
                 onClick={() => {
                   if (playback) {
                     isSongPlaying ? playback.pause() : playback.play()
