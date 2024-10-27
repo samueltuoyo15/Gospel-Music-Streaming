@@ -87,18 +87,21 @@ function Music({ songs }: MusicProps) {
       {selectedIndex !== null && (
         <div
           className={`fixed bottom-14 left-0 w-full bg-gray-900 text-white p-4 transition-height duration-300 ${
-            expanded ? 'h-40' : 'h-full'
+            expanded ? 'h-40' : 'h-full bottom-0 overflow-hidden flex justify-center flex-cols items-center'
           }`}
         >
           <div className="flex items-center justify-between">
-            <div>
+            <div className="flex items-center">
+              <img src={songs[selectedIndex].album.images[0]?.url} className="float-left w-10 h-10 mr-3 rounded" />
+              <div>
               <p className="font-bold">{songs[selectedIndex].name}</p>
               <p className="text-gray-400">{songs[selectedIndex].artists[0].name}</p>
-            </div>
+             </div>
             <button onClick={toggleExpand} className="text-white text-xl">
-              {expanded ? '▼' : '▲'}
+              {expanded ? '▲' : '▼' }
             </button>
-          </div>
+            </div>
+          </div> 
           {expanded && (
             <div className="mt-4">
               <button className="bg-blue-500 p-2 rounded" onClick={toggleExpand}>Play</button>
