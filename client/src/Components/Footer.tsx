@@ -3,7 +3,7 @@ import {IoMdHome} from 'react-icons/io'
 import {FaDoorOpen, FaSearch, FaSpotify} from 'react-icons/fa'
 function Footer(){
   return(
-    <footer className="text-sm select-none shadow-2xl bg-black text-white fixed bottom-0 w-full p-4 flex justify-between items-center">
+    <footer onContextMenu={(e) => e.preventDefault()} className="text-sm select-none shadow-2xl bg-black text-white fixed bottom-0 w-full p-4 flex justify-between items-center">
       <NavLink to="/" className="text-center">
         <IoMdHome className="inline text-lg"/>
         <span className="block">Home</span>

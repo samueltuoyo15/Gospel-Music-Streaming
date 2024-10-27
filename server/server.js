@@ -33,7 +33,7 @@ app.get('/api', async (req, res) => {
   try {
     const token = await getAccessToken()
     const response = await axios.get(
-      'https://api.spotify.com/v1/search?q=genre:gospel+year:2019-2024&type=track&limit=30&offset=30',
+      'https://api.spotify.com/v1/search?q=genre:gospel+year:2019-2024&type=track&limit=50',
       {
         headers: {
           Authorization: `Bearer ${token}`

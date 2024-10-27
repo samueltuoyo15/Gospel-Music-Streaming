@@ -33,6 +33,7 @@ function Header() {
       <span className="inline">Samuel Tuoyo</span>
       <div>
         <img
+         onContextMenu={(e) => e.preventDefault()}
           src="/user.png"
           className="rounded-full w-10 inline"
           alt="User Profile"
