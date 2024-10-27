@@ -1,5 +1,5 @@
 {
-  "name": "spotify Clone",
+  "name": "gospel music streaming",
   "version": "1.0.0",
   "scripts": {
     "install:all": "npm install --prefix client && npm install --prefix server",
@@ -9,8 +9,5 @@
   "keywords": [],
   "author": "OritseWeyinmi Samuel Tuoyo",
   "license": "ISC",
-  "description": "Full Stack Spotify Clone",
-  "dependencies": {
-    "cors": "^2.8.5"
-  }
+  "description": "Full Stack Gospel Music Streaming",
 }
